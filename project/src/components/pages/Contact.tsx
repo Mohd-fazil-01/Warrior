@@ -41,96 +41,35 @@ export function Contact({ cart = [], onClearCart }: ContactProps) {
       return acc + (parseInt(item.price.replace(/[^0-9]/g, '')) || 0);
     }, 0);
 
-    const payload = {
-      name: formData.name,
-      email: formData.email,
-      mobile: formData.mobile,
-      subject: formData.subject || 'Tactical Order Request',
-      message: formData.message,
-      cartItems: cart.map((item) => ({
-        serviceId: item.serviceId,
-        serviceTitle: item.serviceTitle,
-        tierName: item.tierName,
-        price: item.price,
-      })),
-      totalAmount: totalPrice,
-    };
-
-    // 1. Dispatch to Live/Simulated MongoDB Backend
+    // Dispatch Live Email via EmailJS
     try {
-      console.log('Sending transaction payload to backend:', payload);
-      await fetch('http://localhost:5000/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-    } catch (err) {
-      console.warn('Backend server offline. Simulated backend handover complete.', err);
+      console.log('Dispatching live EmailJS secure transmission...');
+
+      const emailParams = {
+        name: formData.name,
+        email: formData.email,
+        mobile: formData.mobile,
+        subject: formData.subject || 'Tactical Order Request',
+        message: formData.message || 'No custom details provided.',
+        cart_summary: cart.length > 0
+          ? cart.map((item) => `- ${item.serviceTitle} [${item.tierName}]: ${item.price}`).join('\n')
+          : 'Direct message (No items in cart)',
+        total_amount: totalPrice,
+      };
+
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_q5guoa9',
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_ipvv9la',
+        emailParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'TDKW3T2HudfUg_8hG'
+      );
+
+      console.log('EmailJS transmission completed successfully!');
+    } catch (emailErr) {
+      console.error('EmailJS transmission failed:', emailErr);
     }
 
-    // // 2. Dispatch Live Email via EmailJS
-    // try {
-    //   console.log('Dispatching live EmailJS secure transmission...');
-      
-    //   const emailParams = {
-    //     from_name: formData.name,
-    //     from_email: formData.email,
-    //     from_mobile: formData.mobile,
-    //     subject: formData.subject || 'Tactical Order Request',
-    //     message: formData.message || 'No custom details provided.',
-    //     cart_summary: cart.length > 0
-    //       ? cart.map((item) => `- ${item.serviceTitle} [${item.tierName}]: ${item.price}`).join('\n')
-    //       : 'Direct message (No items in cart)',
-    //     total_amount: totalPrice,
-    //   };
-
-    //   await emailjs.send(
-    //     import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_q5guoa9',
-    //     import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_ipvv9la',
-    //     emailParams,
-    //     import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'TDKW3T2HudfUg_8hG'
-    //   );
-    //   console.log('EmailJS transmission completed successfully!');
-    // } catch (emailErr) {
-    //   console.error('EmailJS transmission failed:', emailErr);
-    // }
-
-
-
-
-
-    // 2. Dispatch Live Email via EmailJS
-try {
-  console.log('Dispatching live EmailJS secure transmission...');
-
-  const emailParams = {
-    name: formData.name,
-    email: formData.email,
-    mobile: formData.mobile,
-    subject: formData.subject || 'Tactical Order Request',
-    message: formData.message || 'No custom details provided.',
-    cart_summary: cart.length > 0
-      ? cart.map((item) => `- ${item.serviceTitle} [${item.tierName}]: ${item.price}`).join('\n')
-      : 'Direct message (No items in cart)',
-    total_amount: totalPrice,
-  };
-
-  await emailjs.send(
-    import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_q5guoa9',
-    import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_ipvv9la',
-    emailParams,
-    import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'TDKW3T2HudfUg_8hG'
-  );
-
-  console.log('EmailJS transmission completed successfully!');
-} catch (emailErr) {
-  console.error('EmailJS transmission failed:', emailErr);
-}
-
-
-    // 3. Complete Checkout & Clear Cart
+    // Complete Checkout & Clear Cart
     if (onClearCart) {
       onClearCart();
     }
@@ -182,7 +121,7 @@ try {
   }, 0);
 
   return (
-    <div className="min-h-screen bg-dark-bg pt-20 relative">
+    <div className="min-h-screen bg-transparent pt-20 relative">
       {/* HUD Loader / Submitting overlay */}
       {isSubmitting && (
         <div className="fixed inset-0 bg-black/85 z-[100] flex flex-col items-center justify-center font-mono">

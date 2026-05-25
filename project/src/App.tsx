@@ -8,6 +8,9 @@ import { Contact } from './components/pages/Contact';
 import { ServiceDetails } from './components/shared/ServiceDetails';
 import { CartDrawer, CartItem } from './components/shared/CartDrawer';
 import { WhatsAppWidget } from './components/shared/WhatsAppWidget';
+import { CyberChatbot } from './components/shared/CyberChatbot';
+
+import { PlanetCanvas } from './components/shared/PlanetCanvas';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -46,7 +49,8 @@ function App() {
   };
 
   return (
-    <div className="bg-dark-bg min-h-screen text-white">
+    <div className="bg-transparent min-h-screen text-white relative overflow-x-hidden">
+      <PlanetCanvas currentPage={currentPage} />
       <Header
         currentPage={currentPage}
         onNavigate={handleNavigate}
@@ -79,6 +83,7 @@ function App() {
         onCheckout={handleCheckout}
       />
 
+      <CyberChatbot />
       <WhatsAppWidget />
     </div>
   );

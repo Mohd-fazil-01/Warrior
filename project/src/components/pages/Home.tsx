@@ -1,5 +1,5 @@
 import { GlassPanel } from '../shared/GlassPanel';
-import { ArrowRight, Shield, Zap, Lock } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Lock, Terminal, ShieldAlert } from 'lucide-react';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -7,103 +7,145 @@ interface HomeProps {
 
 export function Home({ onNavigate }: HomeProps) {
   return (
-    <div className="min-h-screen bg-dark-bg pt-20">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-neon-green/5 to-transparent opacity-30" />
+    <div className="min-h-screen bg-transparent text-white relative overflow-x-hidden selection:bg-neon-cyan selection:text-dark-bg">
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-8">
-            <div className="inline-block px-4 py-2 bg-neon-green/10 border border-neon-green/30 rounded-full mb-6">
-              <span className="text-neon-green text-xs font-bold tracking-widest">CLASSIFIED OPERATION</span>
-            </div>
-          </div>
 
-          <h1 className="text-5xl sm:text-7xl font-black tracking-tighter mb-6 text-white">
-            WARRIOR <span className="text-neon-green">INFILTRATE</span>
-          </h1>
+      {/* SECTION 1: HERO (Text on Left, 3D Laptop on Right) */}
+      <section className="relative min-h-screen flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Content column */}
+            <div className="lg:col-span-6 text-left space-y-6">
+              <div className="inline-block px-4 py-2 bg-neon-green/10 border border-neon-green/30 rounded-full">
+                <span className="text-neon-green text-[10px] font-black tracking-widest uppercase">
+                  CLASSIFIED CYBER OPERATIONS
+                </span>
+              </div>
+              
+              <h1 className="text-5xl sm:text-7xl font-black tracking-tighter leading-none text-white uppercase">
+                WARRIOR <br />
+                <span className="text-neon-green">INFILTRATE</span>
+              </h1>
 
-          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Advanced cybersecurity solutions for accounts that need tactical intervention.
-          </p>
+              <p className="text-lg sm:text-xl text-gray-300 max-w-lg leading-relaxed">
+                Advanced cybersecurity intelligence and tactical account intervention protocols deployed with military-grade precision.
+              </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <button
-              onClick={() => onNavigate('services')}
-              className="px-8 py-4 bg-neon-green text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-neon-green/50 transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              Explore Services <ArrowRight size={20} />
-            </button>
-            <button
-              onClick={() => onNavigate('contact')}
-              className="px-8 py-4 border-2 border-neon-cyan text-neon-cyan font-bold rounded-lg hover:bg-neon-cyan/10 transition-all duration-300"
-            >
-              Contact Us
-            </button>
-          </div>
-
-          {/* Scanning Animation */}
-          <div className="relative h-64 sm:h-96 bg-gradient-to-b from-neon-green/20 to-transparent rounded-lg overflow-hidden border border-neon-green/30 mb-20">
-            <div className="absolute inset-0 animate-scan bg-gradient-to-b from-transparent via-neon-green/30 to-transparent" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-2xl font-mono text-neon-green mb-4">SYSTEM ONLINE</div>
-                <div className="text-sm text-gray-400">Initializing tactical protocols...</div>
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <button
+                  onClick={() => onNavigate('services')}
+                  className="px-8 py-4 bg-neon-green text-dark-bg font-black rounded hover:shadow-lg hover:shadow-neon-green/50 transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer"
+                >
+                  Explore Services <ArrowRight size={18} />
+                </button>
+                <button
+                  onClick={() => onNavigate('contact')}
+                  className="px-8 py-4 border-2 border-neon-cyan text-neon-cyan font-black rounded hover:bg-neon-cyan/15 transition-all duration-300 uppercase tracking-wider cursor-pointer"
+                >
+                  Contact Console
+                </button>
               </div>
             </div>
+
+            {/* Right Spacer (Frames the 3D laptop on desktop) */}
+            <div className="lg:col-span-6 h-64 lg:h-96 pointer-events-none" />
+            
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h2 className="text-4xl font-black text-white mb-12 text-center tracking-tight">
-          Core <span className="text-neon-cyan">Capabilities</span>
-        </h2>
+      {/* SECTION 2: CAPABILITIES (3D Laptop on Left, Content on Right) */}
+      <section className="relative min-h-screen flex items-center bg-black/35 backdrop-blur-[1px] border-y border-white/5 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* 3D Planet Placeholder Container */}
+            <div className="lg:col-span-6 h-64 sm:h-96 mb-20 pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Shield,
-              title: 'Account Security',
-              description: 'Advanced protection protocols and verification services.',
-            },
-            {
-              icon: Zap,
-              title: 'Rapid Response',
-              description: 'Quick turnaround times on critical operations.',
-            },
-            {
-              icon: Lock,
-              title: 'Privacy First',
-              description: 'Your data remains encrypted and protected.',
-            },
-          ].map((feature, index) => (
-            <GlassPanel key={index} className="p-6 hover:border-neon-cyan/50 transition-all duration-300">
-              <feature.icon className="w-12 h-12 text-neon-green mb-4" />
-              <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-              <p className="text-gray-400 leading-relaxed">{feature.description}</p>
-            </GlassPanel>
-          ))}
+            {/* Right Content column */}
+            <div className="lg:col-span-6 text-left space-y-8">
+              <div className="space-y-3">
+                <span className="text-neon-cyan text-xs font-bold uppercase tracking-widest">
+                  // RECONNAISSANCE SYSTEMS
+                </span>
+                <h2 className="text-4xl sm:text-5xl font-black text-white uppercase tracking-tight">
+                  Core <span className="text-neon-cyan">Capabilities</span>
+                </h2>
+                <p className="text-gray-400 max-w-lg leading-relaxed">
+                  We deploy automated cybernetic diagnostics to secure, verify, or reclaim platforms instantly. 
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
+                {[
+                  {
+                    icon: Shield,
+                    title: 'Strategic Security Hardening',
+                    description: 'Deploy advanced identity filters, security locks, and verified blue ticks.',
+                  },
+                  {
+                    icon: Zap,
+                    title: 'Rapid Deployment & Bypass',
+                    description: 'Instant response protocols for locks, appeals, or target take-downs.',
+                  },
+                  {
+                    icon: Lock,
+                    title: 'Zero-Trace Privacy hardener',
+                    description: 'Client details are encrypted end-to-end and stored in offline ciphers.',
+                  },
+                ].map((feature, index) => (
+                  <GlassPanel key={index} className="p-5 border-neon-cyan/20 hover:border-neon-cyan/50 transition-all duration-300 flex gap-4">
+                    <feature.icon className="w-10 h-10 text-neon-cyan flex-shrink-0 mt-1" />
+                    <div>
+                      <h3 className="text-lg font-black text-white uppercase tracking-wider">{feature.title}</h3>
+                      <p className="text-sm text-gray-400 mt-1 leading-relaxed">{feature.description}</p>
+                    </div>
+                  </GlassPanel>
+                ))}
+              </div>
+            </div>
+            
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <GlassPanel className="p-12 text-center border-neon-green/30">
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-6">
-            Ready to Deploy?
-          </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Contact our tactical team for a consultation on your security needs.
-          </p>
-          <button
-            onClick={() => onNavigate('contact')}
-            className="px-8 py-4 bg-neon-cyan text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-neon-cyan/50 transition-all duration-300"
-          >
-            Get Started
-          </button>
-        </GlassPanel>
+      {/* SECTION 3: TACTICAL HUD (3D Laptop in Center, fully open) */}
+      <section className="relative min-h-screen flex items-center justify-center py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-12 z-10">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-red-500/10 border border-red-500/30 rounded text-red-500 text-xs font-black uppercase tracking-widest">
+              <ShieldAlert size={14} /> Tactical Operations Center
+            </div>
+            <h2 className="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase">
+              Ready to <span className="text-neon-green">Deploy?</span>
+            </h2>
+            <p className="text-gray-300 max-w-xl mx-auto leading-relaxed">
+              Launch standard or custom social verification, unbanning appeals, or organic account operations from our secure checkout transmission line.
+            </p>
+          </div>
+
+          {/* Spacer to let the centered zoomed laptop occupy space */}
+          <div className="h-64 sm:h-80 pointer-events-none" />
+
+          <div className="flex justify-center">
+            <GlassPanel className="p-8 border-neon-green/30 max-w-xl w-full text-center space-y-6 bg-black/60 backdrop-blur-md">
+              <div className="flex justify-center text-neon-green animate-pulse">
+                <Terminal size={36} />
+              </div>
+              <h3 className="text-xl font-bold uppercase tracking-wider text-white">Console Awaiting Credentials</h3>
+              <p className="text-sm text-gray-400">
+                Establish direct transmission with our team. Clear your cart or customize parameters.
+              </p>
+              <button
+                onClick={() => onNavigate('contact')}
+                className="w-full py-4 bg-neon-cyan text-dark-bg font-black rounded-lg hover:shadow-lg hover:shadow-neon-cyan/50 transition-all uppercase tracking-widest cursor-pointer"
+              >
+                Transmit Payload Details
+              </button>
+            </GlassPanel>
+          </div>
+        </div>
       </section>
     </div>
   );
